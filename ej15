@@ -1,0 +1,85 @@
+entrenadores = [
+    {
+        "nombre": "Entrenador1",
+        "torneos_ganados": 4,
+        "batallas_perdidas": 2,
+        "batallas_ganadas": 10,
+        "pokemones": [
+            {"nombre": "Pikachu", "nivel": 30, "tipo": "Eléctrico", "subtipo": ""},
+            {"nombre": "Charizard", "nivel": 40, "tipo": "Fuego", "subtipo": "Volador"},
+        ]
+    },
+]
+
+def cantidad_de_pokemones(nombre_entrenador):
+    for entrenador in entrenadores:
+        if entrenador["nombre"] == nombre_entrenador:
+            return len(entrenador["pokemones"])
+    return 0
+
+def entrenadores_con_mas_de_tres_torneos_ganados():
+    return [entrenador for entrenador in entrenadores if entrenador["torneos_ganados"] > 3]
+
+# c. El Pokémon de mayor nivel del entrenador con mayor cantidad de torneos ganados
+def pokemon_de_mayor_nivel_entrenador_mas_exitoso():
+    entrenador_mas_exitoso = max(entrenadores, key=lambda x: x["torneos_ganados"])
+    pokemon_mas_fuerte = max(entrenador_mas_exitoso["pokemones"], key=lambda x: x["nivel"])
+    return pokemon_mas_fuerte
+
+def entrenadores_con_porcentaje_alto_de_batallas_ganadas():
+    entrenadores_con_porcentaje_alto = []
+    for entrenador in entrenadores:
+        porcentaje_ganadas = (entrenador["batallas_ganadas"] / (entrenador["batallas_ganadas"] + entrenador["batallas_perdidas"])) * 100
+        if porcentaje_ganadas > 79:
+            entrenadores_con_porcentaje_alto.append(entrenador)
+    return entrenadores_con_porcentaje_alto
+
+def entrenadores_con_tipos_de_pokemon(tipo1, subtipo1, tipo2, subtipo2):
+    entrenadores_con_tipos = []
+    for entrenador in entrenadores:
+        for pokemon in entrenador["pokemones"]:
+            if (pokemon["tipo"] == tipo1 and pokemon["subtipo"] == subtipo1) or (pokemon["tipo"] == tipo2 and pokemon["subtipo"] == subtipo2):
+                entrenadores_con_tipos.append(entrenador)
+                break
+    return entrenadores_con_tipos
+
+def promedio_nivel_pokemones(nombre_entrenador):
+    for entrenador in entrenadores:
+        if entrenador["nombre"] == nombre_entrenador:
+            pokemones = entrenador["pokemones"]
+            if not pokemones:
+                return 0  
+            nivel_promedio = sum(pokemon["nivel"] for pokemon in pokemones) / len(pokemones)
+            return nivel_promedio
+    return None
+
+def cuantos_entrenadores_tienen_pokemon(nombre_pokemon):
+    cantidad_entrenadores = sum(1 for entrenador in entrenadores for pokemon in entrenador["pokemones"] if pokemon["nombre"] == nombre_pokemon)
+    return cantidad_entrenadores
+
+def entrenadores_con_pokemon_repetido():
+    entrenadores_con_repetidos = []
+    for entrenador in entrenadores:
+        pokemones = entrenador["pokemones"]
+        nombres_pokemon = [pokemon["nombre"] for pokemon in pokemones]
+        if len(nombres_pokemon) != len(set(nombres_pokemon)):
+            entrenadores_con_repetidos.append(entrenador)
+    return entrenadores_con_repetidos
+
+def entrenadores_con_pokemon_especifico(nombre_pokemon):
+    entrenadores_con_pokemon_especifico = []
+    for entrenador in entrenadores:
+        for pokemon in entrenador["pokemones"]:
+            if pokemon["nombre"] == nombre_pokemon:
+                entrenadores_con_pokemon_especifico.append(entrenador)
+                break
+    return entrenadores_con_pokemon_especifico
+
+def entrenador_tiene_pokemon(nombre_entrenador, nombre_pokemon):
+    for entrenador in entrenadores:
+        if entrenador["nombre"] == nombre_entrenador:
+            for pokemon in entrenador["pokemones"]:
+                if pokemon["nombre"] == nombre_pokemon:
+                    return entrenador, pokemon
+    return None, None
+
